@@ -1,0 +1,47 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# https://www.playframework.com/documentation/latest/ScalaRouting
+# ~~~~
+
+# An example controller showing a sample home page
+GET     /                               controllers.HomeController.index()
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file                   controllers.Assets.versioned(path="/public", file: Asset)
+
+#Player Ops
++nocsrf
+POST    /api/player                          controllers.PlayerController.addPlayer()
+GET     /api/player/byid/:id                 controllers.PlayerController.getPlayer(id: Long)
+PUT     /api/player                          controllers.PlayerController.updatePlayer
+DELETE  /api/player/:name                    controllers.PlayerController.deletePlayer(name: String)
+GET     /api/player/byname/:name             controllers.PlayerController.getPlayerByName(name: String)
+GET     /api/player/all                      controllers.PlayerController.all
+
+#Team Ops
++nocsrf
+POST    /api/team                          controllers.TeamController.addTeam2()
+GET     /api/team/byid/:id                 controllers.TeamController.getTeam(id: Long)
+PUT     /api/team                          controllers.TeamController.updateTeam
+DELETE  /api/team/:name                    controllers.TeamController.deleteTeam(name: String)
+GET     /api/team/byname/:name             controllers.TeamController.getTeamByName(name: String)
+GET     /api/team/all                      controllers.TeamController.all
+
+#Student Ops
++nocsrf
+POST    /student/add                         controllers.StudentController.addStudent()
+GET     /student/by-name/:name               controllers.StudentController.getStudentByName(name: String)
+GET     /student/by-id/:id                   controllers.StudentController.getStudent(id: Long)
+GET     /student/all                         controllers.StudentController.list_all()
+PUT     /student/update                      controllers.StudentController.updateStudent()
+DELETE  /student/delete/:name                controllers.StudentController.deleteStudent(name: String)
+
+#Tournament Ops
++nocsrf
+POST    /tournament/add                      controllers.TournamentController.createTournament()
+GET     /tournament/all                      controllers.TournamentController.list_all()
+DELETE  /tournament/delete/:name             controllers.TournamentController.deleteTournament(name: String)
+POST    /player/add                          controllers.IPLPlayerController.addPlayer()
+GET     /player/score/:name                  controllers.IPLPlayerController.getScoreByPlayerName(name:String)
+POST    /team/add                            controllers.IPLTeamController.addTeam()
+GET     /score/player/:name                  controllers.IPLTeamController.getScoreByPlayerName(name: String)
+GET     /score/team/:name                    controllers.IPLTeamController.getTeamScore(name: String)

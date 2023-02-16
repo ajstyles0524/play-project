@@ -1,0 +1,32 @@
+Event management project which does CRUD operation.
+With services test cases and controller.
+
+Please give me API to add Player data and get player List.
+
+Eventmanagement
+    -> Cricket event management ?
+
+- Schema of the project
+    Entities/ Beans  are there
+    // This will be scema of no sql
+    1] Player
+        - Name
+        - Country
+        - Team
+        - Role
+        - Team
+        - Match many matches
+    2] Team
+        Name
+        Country
+        score
+
+    3] Match -
+        - name  - wouldcup
+        - Venue - SriLanka
+- Add / update / search and delete Player.
+
+
+
+
+
