@@ -1,7 +1,6 @@
 ThisBuild / scalaVersion := "2.13.8"
 
 ThisBuild / version := "1.0-SNAPSHOT"
-libraryDependencies += "io.spray" %%  "spray-json" % "1.3.6"
 
 
 lazy val root = (project in file("."))

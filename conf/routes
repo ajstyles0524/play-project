@@ -37,11 +37,27 @@ DELETE  /student/delete/:name                controllers.StudentController.delet
 
 #Tournament Ops
 +nocsrf
-POST    /tournament/add                      controllers.TournamentController.createTournament()
-GET     /tournament/all                      controllers.TournamentController.list_all()
-DELETE  /tournament/delete/:name             controllers.TournamentController.deleteTournament(name: String)
-POST    /player/add                          controllers.IPLPlayerController.addPlayer()
-GET     /player/score/:name                  controllers.IPLPlayerController.getScoreByPlayerName(name:String)
-POST    /team/add                            controllers.IPLTeamController.addTeam()
-GET     /score/player/:name                  controllers.IPLTeamController.getScoreByPlayerName(name: String)
-GET     /score/team/:name                    controllers.IPLTeamController.getTeamScore(name: String)
+GET     /tournament/team/all                         controllers.CricketTeamController.all()
+POST    /tournament/team/add                         controllers.CricketTeamController.addTeam()
+DELETE  /tournament/team/delete/:name                controllers.CricketTeamController.deleteTeam(name: String)
+
+GET     /tournament/all                              controllers.TournamentController.all()
+POST    /tournament/add                              controllers.TournamentController.createTournament()
+DELETE  /tournament/delete/:name                     controllers.TournamentController.deleteTournament(name: String)
+
+GET     /tournament/team/player/all                  controllers.CricketPlayerController.all()
+POST    /tournament/team/player/add                  controllers.CricketPlayerController.addPlayer()
+DELETE  /tournament/team/player/delete/:name         controllers.CricketPlayerController.deletePlayer(name: String)
+
+GET     /tournament/match/all                        controllers.MatchController.all()
+POST    /tournament/match/add                        controllers.MatchController.addMatch()
+DELETE  /tournament/match/delete/:id                 controllers.MatchController.deleteMatch(id: Long)
+
+
+GET     /tournament/winner/teams/:id                 controllers.TournamentController.getAllWinnersById(id: Long)
+GET     /tournament/matches/:id                      controllers.TournamentController.matchesByTournamentId(id: Long)
+GET     /tournament/MaxScore/:id                     controllers.CricketTeamController.getTeamWithMaxScore(id: Long)
+GET     /tournament/winner/team/MaxScorer/:id        controllers.TournamentController.getWinnerWithMaxScorer(id:Long)
+GET     /tournament/MaxScorer/:id                    controllers.CricketPlayerController.getMaxScorerInTournament(id: Long)
+
+

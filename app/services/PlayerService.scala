@@ -1,7 +1,7 @@
 package services
 
 import com.google.inject.Singleton
-import dao.PlayerDao
+import dao.{CricketTeamDao, PlayerDao}
 
 import javax.inject.Inject
 import scala.concurrent.Future
