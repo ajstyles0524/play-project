@@ -30,6 +30,16 @@ class TournamentController @Inject()(tournamentDao: TournamentDao, tournamentSer
     }
   }
 
+  def matchesByTournamentId(id: Long): Action[AnyContent] = Action.async { implicit request =>
+    tournamentService.matchesByTournament(id).map { data => Ok(Json.toJson(data))
+    } recover { case t: Throwable => BadRequest(t.getLocalizedMessage) }
+  }
+
+  def getWinnerWithMaxScorer(id: Long): Action[AnyContent] = Action.async { implicit request =>
+    tournamentService.getWinningTeamWithMaxScorer(id).map { data => Ok(s"Winners with Team id and Max Scorer details - $data ")
+    } recover { case t: Throwable => BadRequest(t.getLocalizedMessage) }
+  }
+
   def deleteTournament(name: String): Action[AnyContent] = Action.async { implicit request =>
     tournamentService.findAndDelete(name).map { _ => Ok(s"Successfully deleted tournament ${name}")
     } recover { case t: Throwable => BadRequest(t.getLocalizedMessage) }
@@ -40,13 +50,4 @@ class TournamentController @Inject()(tournamentDao: TournamentDao, tournamentSer
     } recover { case t: Throwable => BadRequest(t.getLocalizedMessage) }
   }
 
-  def matchesByTournamentId(id: Long): Action[AnyContent] = Action.async { implicit request =>
-    tournamentService.matchesByTournament(id).map { data => Ok(Json.toJson(data))
-    } recover { case t: Throwable => BadRequest(t.getLocalizedMessage) }
-  }
-
-  def getWinnerWithMaxScorer(id: Long): Action[AnyContent] = Action.async { implicit request =>
-    tournamentService.getWinningTeamWithMaxScorer(id).map { data => Ok(s"Winners with Team id and Max Scorer details - $data ")
-    } recover { case t: Throwable => BadRequest(t.getLocalizedMessage) }
-  }
 }

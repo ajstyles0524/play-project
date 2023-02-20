@@ -54,10 +54,11 @@ POST    /tournament/match/add                        controllers.MatchController
 DELETE  /tournament/match/delete/:id                 controllers.MatchController.deleteMatch(id: Long)
 
 
-GET     /tournament/winner/teams/:id                 controllers.TournamentController.getAllWinnersById(id: Long)
 GET     /tournament/matches/:id                      controllers.TournamentController.matchesByTournamentId(id: Long)
 GET     /tournament/MaxScore/:id                     controllers.CricketTeamController.getTeamWithMaxScore(id: Long)
-GET     /tournament/winner/team/MaxScorer/:id        controllers.TournamentController.getWinnerWithMaxScorer(id:Long)
 GET     /tournament/MaxScorer/:id                    controllers.CricketPlayerController.getMaxScorerInTournament(id: Long)
+GET     /tournament/winner/teams/:id                 controllers.TournamentController.getAllWinnersById(id: Long)
+GET     /tournament/winner/team/MaxScorer/:id        controllers.TournamentController.getWinnerWithMaxScorer(id:Long)
+
 
 
