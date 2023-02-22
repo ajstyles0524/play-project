@@ -1,6 +1,6 @@
 package controllers
 
-import models.Tournament
+import models.{Match, Tournament}
 import org.scalatestplus.play._
 import org.scalatestplus.play.guice._
 import play.api.libs.json.{JsObject, Json}
@@ -42,6 +42,18 @@ class TournamentControllerSpec extends PlaySpec with GuiceOneAppPerTest with Inj
       contentAsJson(getTournamentResponse).as[Seq[Tournament]] must not contain testTournament1
     }
 
+    "return matches by tournament name" in {
+      val testMatches = Seq(
+        Match(21, "CSK", "MI", "IPL"),
+        Match(22, "KKR", "MI", "IPL"),
+        Match(23, "INDIA", "SRI LANKA", "ASIA-CUP")
+      )
+      val tournamentName = "IPL"
+      val matchesByTournamentIdRequest = FakeRequest(GET, s"/tournament/matches/$tournamentName")
+      val matchesByTournamentIdResponse = route(app, matchesByTournamentIdRequest).get
+      status(matchesByTournamentIdResponse) mustBe OK
+      contentAsJson(matchesByTournamentIdResponse).as[Seq[Match]] mustEqual testMatches
+    }
 
   }
 }

@@ -33,7 +33,7 @@ DELETE  /tournament/match/delete/:id                 controllers.MatchController
 GET     /tournament/all                              controllers.TournamentController.all()
 POST    /tournament/add                              controllers.TournamentController.createTournament()
 DELETE  /tournament/delete/:name                     controllers.TournamentController.deleteTournament(name: String)
-GET     /tournament/matches/:name                    controllers.TournamentController.matchesByTournamentId(name: String)
+GET     /tournament/matches/:name                        controllers.TournamentController.matchesByTournamentId(name: String)
 GET     /tournament/winner/teams/:name                   controllers.TournamentController.getAllWinnersByName(name: String)
 GET     /tournament/max-scorer-tournament/:name          controllers.PlayerController.getMaxScorerInTournament(name: String)
 GET     /tournament/team/max-score/:name                 controllers.TeamController.getTeamWithMaxScore(name: String)
