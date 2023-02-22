@@ -17,7 +17,7 @@ class MatchController @Inject()(val matchDao: MatchDao, val controllerComponents
     request.body.asJson match {
       case Some(json) =>
         val value = json.asOpt[Match].getOrElse(throw new NoSuchElementException("Please provide valid data"))
-        matchDao.insert(value).map { _ => Ok("Match is added successfully") }
+        matchDao.insert(value).map { data => Ok(Json.toJson(data)) }
       case None => Future.successful(BadRequest)
     }
   }

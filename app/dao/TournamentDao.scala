@@ -13,9 +13,9 @@ class TournamentDao @Inject()(dbConfigProvider: DatabaseConfigProvider)(implicit
   import dbConfig._
   import profile.api._
 
-  class TournamentTable(tag: Tag) extends Table[Tournament](tag, "tournament") {
-    def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
-    def name = column[String]("name")
+  class TournamentTable(tag: Tag) extends Table[Tournament](tag, "Tournament") {
+    def id = column[Long]("id", O.AutoInc)
+    def name = column[String]("name", O.PrimaryKey)
     def * = (id, name) <> ((Tournament.apply _).tupled, Tournament.unapply)
   }
 

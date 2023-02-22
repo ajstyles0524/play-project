@@ -1,8 +1,9 @@
 package models
 
-import play.api.libs.json.Json
-case class Team(id: Long =1, name: String ="ramdas", score: Int = 33)
+import play.api.libs.json.{Json, OFormat}
+
+case class Team(id: Long, name: String)
 
 object Team {
-  implicit val format = Json.format[Team]
+  implicit val teamFormat: OFormat[Team] = Json.format[Team]
 }

@@ -6,30 +6,30 @@ import play.api.db.slick.DatabaseConfigProvider
 import slick.jdbc.JdbcProfile
 import models.Match
 
-class MatchDao @Inject()(dbConfigProvider: DatabaseConfigProvider, val cricketTeamDao: CricketTeamDao, val tournamentDao: TournamentDao)(implicit ec: ExecutionContext) {
+class MatchDao @Inject()(dbConfigProvider: DatabaseConfigProvider, val cricketTeamDao: TeamDao, val tournamentDao: TournamentDao)(implicit ec: ExecutionContext) {
   val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig._
   import profile.api._
 
-  class MatchTable(tag: Tag) extends Table[Match](tag, "match") {
-    def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
-    def team1_id = column[Long]("team_id1")
-    def team2_id = column[Long]("team_id2")
-    def tournament_id = column[Long]("tournament_id")
-    def * = (id, team1_id, team2_id, tournament_id) <> ((Match.apply _).tupled, Match.unapply)
-    def tournament = foreignKey("tournament_fk", tournament_id, tournamentDao.tournaments)(_.id)
-    def team1 = foreignKey("team1_fk", team1_id, cricketTeamDao.cricketTeams)(_.id)
-    def team2 = foreignKey("team2_fk", team2_id, cricketTeamDao.cricketTeams)(_.id)
+  class MatchTable(tag: Tag) extends Table[Match](tag, "Match") {
+    def id = column[Long]("id", O.AutoInc)
+    def team_name1 = column[String]("team_name1")
+    def team_name2 = column[String]("team_name2")
+    def tournament_name = column[String]("tournament_name", O.PrimaryKey)
+    def * = (id, team_name1, team_name2, tournament_name) <> ((Match.apply _).tupled, Match.unapply)
+    def tournament = foreignKey("tournament_fk", tournament_name, tournamentDao.tournaments)(_.name)
+    def team1 = foreignKey("team1_fk", team_name1, cricketTeamDao.cricketTeams)(_.name)
+    def team2 = foreignKey("team2_fk", team_name2, cricketTeamDao.cricketTeams)(_.name)
   }
 
   val matches = TableQuery[MatchTable]
 
   def insert(matchObj: Match): Future[Match] = db.run {
-    (matches.map(m => (m.team1_id, m.team2_id, m.tournament_id))
+    (matches.map(m => (m.team_name1, m.team_name2, m.tournament_name))
       returning matches.map(_.id)
       into ((matchData, id) => matchObj.copy(id = id))
-      ) += (matchObj.team_id1, matchObj.team_id2, matchObj.tournamentId)
+      ) += (matchObj.team_name1, matchObj.team_name2, matchObj.tournament_name)
   }
 
 
@@ -41,13 +41,13 @@ class MatchDao @Inject()(dbConfigProvider: DatabaseConfigProvider, val cricketTe
     matches.filter(_.id === id).result.headOption
   }
 
-  def getByTournamentId(tournamentId: Long): Future[Seq[Match]] = db.run {
-    matches.filter(_.tournament_id === tournamentId).result
+  def getByTournamentName(tournament_name: String): Future[Seq[Match]] = db.run {
+    matches.filter(_.tournament_name === tournament_name).result
   }
 
-  def update(id: Long, tournamentId: Long, team1Id: Long, team2Id: Long): Future[Int] = db.run {
-    matches.filter(_.id === id).map(m => (m.tournament_id, m.team1_id, m.team2_id))
-      .update(tournamentId, team1Id, team2Id)
+  def update(id: Long, tournament_name: String, team_name1: String, team_name2: String): Future[Int] = db.run {
+    matches.filter(_.id === id).map(m => (m.tournament_name, m.team_name1, m.team_name2))
+      .update(tournament_name, team_name1, team_name2)
   }
 
   def delete(id: Long): Future[Int] = db.run {
